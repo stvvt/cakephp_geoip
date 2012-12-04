@@ -87,8 +87,10 @@ class GeoipCommonSource extends DataSource {
 	}
 	
 	function _transkey(&$result, $old_key, $new_key) {
-		$result[$new_key] = $result[$old_key];
-		unset($result[$old_key]);
+	    if (isset($result[$old_key])) {
+    		$result[$new_key] = $result[$old_key];
+    		unset($result[$old_key]);
+	    }
 	}
 	
 	function selectByIp($config, $ip, $ip_number) {
@@ -101,12 +103,11 @@ class GeoipCommonSource extends DataSource {
 		
 		$result = Cache::read($ip, sprintf('geoip_%s', $this->name));
 		if (empty($result)) {
-			$result = $this->_createGeoipRecord();
-			foreach ($this->selectByIp($this->config, $ip, $ip_number) as $key => $value) {
-				if (isset($result[$key])) $result[$key] = $value;
-			}
-			ksort($result);
-			Cache::write($ip, $result, sprintf('geoip_%s', $this->name));
+// 			$result = $this->_createGeoipRecord();
+			
+			$result = $this->selectByIp($this->config, $ip, $ip_number);
+
+// 			Cache::write($ip, $result, sprintf('geoip_%s', $this->name));
 		}
 
 		return array(array($model->name => $result));
