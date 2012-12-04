@@ -50,11 +50,11 @@ class GeoipCommonSource extends DataSource {
 	function describe($model) {
 	}
 	
-	function listSources() {
+	function listSources($data = null) {
 		return array('geoips');
 	}
 	
-	function create($model, $fields = array(), $values = array()) {
+	function create(Model $model, $fields = NULL, $values = NULL) {
 	}
 	
 	function _extractIp($model, $queryData) {
@@ -95,7 +95,7 @@ class GeoipCommonSource extends DataSource {
 		return array();
 	}
 	
-	function read($model, $queryData = array()) {
+	function read(Model $model, $queryData = array(), $recursive = NULL) {
 		$ip = $this->_extractIp($model, $queryData);
 		$ip_number = $this->_convert($ip);
 		
@@ -112,10 +112,10 @@ class GeoipCommonSource extends DataSource {
 		return array(array($model->name => $result));
 	}
 	
-	function update($model, $fields = array(), $values = array()) {
+	function update(Model $model, $fields = NULL, $values = NULL, $conditions = NULL) {
 	}
 	
-	function delete($model, $id = null) {
+	function delete(Model $model, $id = NULL) {
 	}
 	
 	function query() {

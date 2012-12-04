@@ -2,9 +2,10 @@
 
 $plugin = Inflector::camelize(basename(realpath(dirname(__FILE__) . '/../..')));
 foreach (array('geoip', 'geoipregionvars', 'geoipcity') as $filename) {
-	App::import('Vendor', $plugin . '.cakephp_maxmind_' . str_replace('/', '_', $filename), array('file' => 'vendors/maxmind/' . $filename . '.php'));
+	App::import('Vendor', $plugin . '.cakephp_maxmind_' . str_replace('/', '_', $filename), array('file' => 'maxmind/' . $filename . '.php'));
 }
-App::import('DataSource', $plugin . '.GeoipCommonSource');
+// App::import('DataSource', $plugin . '.GeoipCommonSource');
+App::uses('GeoipCommonSource', $plugin . '.Model/Datasource');
 unset($plugin);
 
 class MaxmindSource extends GeoipCommonSource {
